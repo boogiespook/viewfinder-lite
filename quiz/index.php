@@ -659,7 +659,7 @@ if (isset($_POST['quiz_submit'])) {
                 <?php if (!isset($_POST['quiz_submit'])): ?>
                 <div id="view-landing" class="view-content">
                     <h1><i class="fa-solid fa-graduation-cap"></i> Digital Sovereignty Quiz</h1>
-                    <p class="subtitle">Evaluate your knowledge on digital independence. This 7-domain assessment identifies your current knowledge on reliance and technical autonomy.</p>
+                    <p class="subtitle">Evaluate your knowledge on digital independence. This 7-domain quiz identifies your current knowledge on reliance and technical autonomy.</p>
 
                     <div class="landing-grid">
                         <div class="landing-item full-width">
@@ -741,7 +741,7 @@ if (isset($_POST['quiz_submit'])) {
 
                     <div style="text-align: center; margin-top: 2rem;">
                         <button type="button" class="btn-primary" onclick="startQuiz()">
-                            <i class="fa-solid fa-play"></i> Begin Assessment
+                            <i class="fa-solid fa-play"></i> Begin Quiz
                         </button>
                     </div>
                 </div>
