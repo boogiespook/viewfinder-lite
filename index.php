@@ -141,11 +141,11 @@
   <div class="landing-page-wrapper">
     <div class="container" style="max-width: 1000px; margin: 3rem auto;">
       <div style="text-align: center; margin-bottom: 3rem;">
-        <h1 style="color: #9ec7fc; font-size: 2.5rem; margin-bottom: 1rem;">
-          <i class="fa-solid fa-compass"></i> Viewfinder Lite
+        <h1 style="color: #9ec7fc; font-size: 2.2rem; margin-bottom: 0.75rem; font-weight: 600;">
+          Digital Sovereignty Navigator
         </h1>
-        <p style="color: #ccc; font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
-          Digital Sovereignty Assessment Tools
+        <p style="color: #ccc; font-size: 1.1rem; max-width: 800px; margin: 0 auto;">
+          Discover what you know and where you stand to help unlock strategies which strengthen your digital independence
         </p>
       </div>
 
@@ -184,5 +184,9 @@
       </div>
     </div>
   </div>
+
+  <footer class="disclaimer-footer">
+    <p><strong>Red Hat Disclaimer:</strong> This application is provided for informational purposes only. The information is provided "as is" with no guarantee or warranty of accuracy, completeness, or fitness for a particular purpose.</p>
+  </footer>
 </body>
 </html>
