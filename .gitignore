@@ -1,0 +1,24 @@
+# Composer dependencies
+vendor/
+
+# Runtime logs
+logs/
+*.log
+
+# Quiz leaderboard data
+quiz/data/*.json
+quiz/data/*.txt
+
+# PHPUnit cache
+.phpunit.result.cache
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

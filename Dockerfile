@@ -1,0 +1,71 @@
+# Multi-stage build for production-ready container
+FROM registry.access.redhat.com/ubi9/php-83:latest
+
+# Metadata
+LABEL maintainer="Chris Jenkins <chrisj@redhat.com>" \
+      version="1.0.0" \
+      description="Viewfinder Lite - Digital Sovereignty Quiz and Readiness Assessment"
+
+# Set working directory
+WORKDIR /opt/app-root/src
+
+# Install system dependencies and PHP extensions
+USER root
+RUN dnf install -y \
+    httpd \
+    php-fpm \
+    php-json \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+# Configure Apache for security
+RUN sed -i 's/^ServerTokens .*/ServerTokens Prod/' /etc/httpd/conf/httpd.conf && \
+    sed -i 's/^ServerSignature .*/ServerSignature Off/' /etc/httpd/conf/httpd.conf && \
+    echo 'Header always set X-Content-Type-Options "nosniff"' >> /etc/httpd/conf/httpd.conf && \
+    echo 'Header always set X-Frame-Options "SAMEORIGIN"' >> /etc/httpd/conf/httpd.conf && \
+    echo 'Header always set X-XSS-Protection "1; mode=block"' >> /etc/httpd/conf/httpd.conf
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copy composer files first for better layer caching
+COPY --chown=1001:0 composer.json ./
+COPY --chown=1001:0 composer.lock* ./
+
+# Install PHP dependencies as root
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+# Copy application files
+# Includes Digital Sovereignty Readiness Assessment and Quiz only
+COPY --chown=1001:0 index.php ./
+COPY --chown=1001:0 includes/ ./includes/
+COPY --chown=1001:0 css/ ./css/
+COPY --chown=1001:0 js/ ./js/
+COPY --chown=1001:0 images/ ./images/
+COPY --chown=1001:0 ds-qualifier/ ./ds-qualifier/
+COPY --chown=1001:0 quiz/ ./quiz/
+COPY --chown=1001:0 error-pages/ ./error-pages/
+COPY --chown=1001:0 README.md ./
+
+# Create logs and quiz data directories
+RUN mkdir -p /opt/app-root/src/logs /opt/app-root/src/quiz/data
+
+# Set proper permissions
+RUN chown -R 1001:0 /opt/app-root/src && \
+    chmod -R g=u /opt/app-root/src && \
+    chmod 755 /opt/app-root/src && \
+    chmod 775 /opt/app-root/src/logs && \
+    chmod 775 /opt/app-root/src/quiz/data
+
+# Switch back to non-root user
+USER 1001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8080/ || exit 1
+
+# Expose port
+EXPOSE 8080
+
+# Use PHP development server
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "/opt/app-root/src"]
