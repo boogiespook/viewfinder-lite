@@ -18,17 +18,6 @@ A streamlined version of the Viewfinder Assessment Tool, containing only the Dig
 - Leaderboard with top scores
 - Privacy-focused (opt-in data storage)
 
-## What's NOT Included
-
-The following features from the full Viewfinder tool are **excluded** from Viewfinder Lite:
-
-- Profile Management (Create, Edit, Delete, Export, Import)
-- Full Maturity Assessments
-- Detailed Assessment Results
-- Operation Sovereign Shield Escape Room
-- Control frameworks and compliance mappings
-- Line of Business (LOB) specific content
-
 ## Installation
 
 ### Local Installation
@@ -183,4 +172,4 @@ Current version: **1.0.0**
 
 ## License
 
-Proprietary - Red Hat
+Apache-2.0 license - Red Hat
